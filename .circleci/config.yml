@@ -1,0 +1,17 @@
+# .circleci/config.yml
+version: 2.1
+jobs:
+  lint-and-test:
+    docker:
+      - image: cimg/node:20.18
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run check:req
+workflows:
+  #version: 2
+  ci:
+    jobs:
+      - lint-and-test
