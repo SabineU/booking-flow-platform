@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check:req": "node scripts/check-requirements.js"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
