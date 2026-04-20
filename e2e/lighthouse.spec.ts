@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, chromium } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 import lighthouse from 'lighthouse';
@@ -7,14 +7,20 @@ import type { Flags } from 'lighthouse';
 
 test.describe('Lighthouse Audit', () => {
   test('Performance and accessibility scores meet thresholds', async ({ page }) => {
-    // Wait for app to be fully loaded
+    // Wait for the app to be fully loaded
     await page.goto('/');
     await expect(page.locator('[data-testid="postcode-input"]')).toBeVisible();
 
     const url = page.url();
 
-    // Launch Chrome for Lighthouse
-    const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless=new'] });
+    // Use Playwright's Chromium executable path
+    const chromePath = chromium.executablePath();
+
+    // Launch Chrome with Lighthouse using the Playwright Chromium binary
+    const chrome = await chromeLauncher.launch({
+      chromePath,
+      chromeFlags: ['--headless=new'],
+    });
 
     const options: Flags = {
       logLevel: 'info',
@@ -31,8 +37,6 @@ test.describe('Lighthouse Audit', () => {
     console.log(`Performance score: ${performanceScore}`);
     console.log(`Accessibility score: ${accessibilityScore}`);
 
-    // For assessment purposes, we only need the report. Lower thresholds to avoid false failures.
-    // You can adjust these values or remove the assertions entirely.
     expect(performanceScore).toBeGreaterThanOrEqual(0.5);
     expect(accessibilityScore).toBeGreaterThanOrEqual(0.95);
 
@@ -44,6 +48,17 @@ test.describe('Lighthouse Audit', () => {
     }
     fs.writeFileSync(path.join(reportDir, 'report.html'), reportHtml as string);
 
-    await chrome.kill();
+    // Gracefully kill Chrome – ignore Windows EPERM cleanup error
+    try {
+      await chrome.kill();
+    } catch (error: any) {
+      // On Windows, chrome-launcher sometimes fails to delete temp dir with EPERM.
+      // The test has already passed, so we can safely ignore this error.
+      if (error.code === 'EPERM' || error.message.includes('EPERM')) {
+        console.warn('Ignoring Windows EPERM error during Chrome cleanup.');
+      } else {
+        throw error;
+      }
+    }
   });
 });
