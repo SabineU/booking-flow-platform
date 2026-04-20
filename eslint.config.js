@@ -9,7 +9,15 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
   // Ignore folders and config files that shouldn't be linted with type-aware rules
-  globalIgnores(['dist', 'node_modules', 'coverage', 'e2e/**', '*.config.ts', '*.config.js']),
+  globalIgnores([
+    'dist',
+    'node_modules',
+    'coverage',
+    'e2e/**',
+    'public/**', // ✅ Ignore auto‑generated MSW worker
+    '*.config.ts',
+    '*.config.js',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     plugins: {
