@@ -2,7 +2,7 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - NODE_ENV=production
-      - VITE_ENABLE_MSW=true   # Optional now, but kept for consistency
+      - VITE_ENABLE_MSW=true # Optional now, but kept for consistency
