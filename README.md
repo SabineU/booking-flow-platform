@@ -29,32 +29,34 @@ A 4‑step skip (dumpster) booking flow with full QA automation. Built for a QA 
 
 ## 📁 Project Structure
 
-`booking-flow-platform/`
-├── `.github/workflows/` # GitHub Actions CI
-├── `.circleci/` # CircleCI config
-├── `e2e/` # Playwright E2E tests
-│ ├── `pages/` # Page Object Model classes
-│ │ ├── `BasePage.ts`
-│ │ ├── `PostcodeStep.ts`
-│ │ ├── `WasteTypeStep.ts`
-│ │ ├── `SkipSelectionStep.ts`
-│ │ └── `ReviewStep.ts`
-│ ├── `booking-flow.spec.ts`
-│ ├── `accessibility.spec.ts`
-│ ├── `visual-evidence.spec.ts`
-│ └── `lighthouse.spec.ts`
-├── `public/` # Static assets (including MSW worker)
-├── `src/`
-│ ├── `components/` # React components (Step1–Step4)
-│ ├── `hooks/` # Custom hooks (usePostcodeLookup, useSkips, useConfirmBooking)
-│ ├── `mocks/` # MSW handlers and browser setup
-│ ├── `utils/` # Validation, price calculation
-│ └── `App.tsx`
-├── `screenshots/` # Auto‑generated UI evidence (run test:e2e:visual)
-├── `lighthouse-report/` # Lighthouse HTML report (run test:e2e:lighthouse)
-├── `bug-reports.md` # Verified bugs with evidence
-├── `manual-tests.md` # Test cases (35+ cases)
-└── `README.md`
+````text
+booking-flow-platform/
+├── .github/workflows/         # GitHub Actions CI
+├── .circleci/                 # CircleCI config
+├── e2e/                       # Playwright E2E tests
+│   ├── pages/                 # Page Object Model classes
+│   │   ├── BasePage.ts
+│   │   ├── PostcodeStep.ts
+│   │   ├── WasteTypeStep.ts
+│   │   ├── SkipSelectionStep.ts
+│   │   └── ReviewStep.ts
+│   ├── booking-flow.spec.ts
+│   ├── accessibility.spec.ts
+│   ├── visual-evidence.spec.ts
+│   └── lighthouse.spec.ts
+├── public/                    # Static assets (including MSW worker)
+├── src/
+│   ├── components/            # React components (Step1–Step4)
+│   ├── hooks/                 # Custom hooks (usePostcodeLookup, useSkips)
+│   ├── mocks/                 # MSW handlers and browser setup
+│   ├── utils/                 # Validation, price calculation
+│   └── App.tsx
+├── screenshots/               # Auto‑generated UI evidence
+├── lighthouse-report/         # Lighthouse HTML report
+├── bug-reports.md             # Verified bugs with evidence
+├── manual-tests.md            # Test cases (35+ cases)
+└── README.md
+
 
 ---
 
@@ -65,7 +67,7 @@ git clone https://github.com/SabineU/booking-flow-platform.git
 cd booking-flow-platform
 npm install
 npm run dev
-```
+````
 
 The app will be available at http://localhost:5173. MSW starts automatically in development mode.
 
