@@ -29,7 +29,7 @@ A 4‑step skip (dumpster) booking flow with full QA automation. Built for a QA 
 
 ## 📁 Project Structure
 
-````text
+```text
 booking-flow-platform/
 ├── .github/workflows/         # GitHub Actions CI
 ├── .circleci/                 # CircleCI config
@@ -56,7 +56,7 @@ booking-flow-platform/
 ├── bug-reports.md             # Verified bugs with evidence
 ├── manual-tests.md            # Test cases (35+ cases)
 └── README.md
-
+```
 
 ---
 
@@ -67,7 +67,7 @@ git clone https://github.com/SabineU/booking-flow-platform.git
 cd booking-flow-platform
 npm install
 npm run dev
-````
+```
 
 The app will be available at http://localhost:5173. MSW starts automatically in development mode.
 
