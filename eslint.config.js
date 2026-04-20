@@ -8,7 +8,8 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist', 'node_modules', 'coverage']),
+  // Ignore folders and config files that shouldn't be linted with type-aware rules
+  globalIgnores(['dist', 'node_modules', 'coverage', 'e2e/**', '*.config.ts', '*.config.js']),
   {
     files: ['**/*.{ts,tsx}'],
     plugins: {

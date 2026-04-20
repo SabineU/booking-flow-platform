@@ -1,101 +1,81 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from './assets/vite.svg';
-import heroImg from './assets/hero.png';
+import { Step1Postcode } from './components/Step1Postcode';
+import { Step2WasteType } from './components/Step2WasteType';
+import { Step3SkipSelection } from './components/Step3SkipSelection';
+import { Step4Review } from './components/Step4Review';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [step, setStep] = useState(1);
+  const [bookingData, setBookingData] = useState<any>({});
+
+  const handleStep1Complete = (data: any) => {
+    setBookingData((prev: any) => ({ ...prev, ...data }));
+    setStep(2);
+  };
+
+  const handleStep2Complete = (data: any) => {
+    setBookingData((prev: any) => ({ ...prev, ...data }));
+    setStep(3);
+  };
+
+  const handleStep3Complete = (data: any) => {
+    setBookingData((prev: any) => ({ ...prev, ...data }));
+    setStep(4);
+  };
+
+  const handleConfirmComplete = () => {
+    setStep(5);
+  };
+
+  const isHeavyWaste = bookingData.wasteType === 'heavy';
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button className="counter" onClick={() => setCount((count) => count + 1)}>
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    <div className="app">
+      {/* Main landmark for accessibility */}
+      <main>
+        {/* Level-one heading for accessibility */}
+        <h1 className="visually-hidden">Skip Hire Booking</h1>
+        {step === 1 && <Step1Postcode onNext={handleStep1Complete} />}
+        {step === 2 && (
+          <Step2WasteType
+            onNext={handleStep2Complete}
+            initialData={{
+              wasteType: bookingData.wasteType,
+              plasterboardOption: bookingData.plasterboardOption,
+            }}
+          />
+        )}
+        {step === 3 && (
+          <Step3SkipSelection
+            onNext={handleStep3Complete}
+            initialData={{ skipSize: bookingData.skipSize, price: bookingData.price }}
+            isHeavyWaste={isHeavyWaste}
+            postcode={bookingData.postcode}
+          />
+        )}
+        {step === 4 && (
+          <Step4Review
+            data={{
+              postcode: bookingData.postcode,
+              address: bookingData.address,
+              manualAddress: bookingData.manualAddress,
+              wasteType: bookingData.wasteType,
+              plasterboardOption: bookingData.plasterboardOption,
+              skipSize: bookingData.skipSize,
+              price: bookingData.price,
+            }}
+            onConfirm={handleConfirmComplete}
+          />
+        )}
+        {step === 5 && (
+          <div className="success-page">
+            <h2>Thank you for your booking!</h2>
+            <p>We will be in touch shortly.</p>
+          </div>
+        )}
+      </main>
+    </div>
   );
 }
 

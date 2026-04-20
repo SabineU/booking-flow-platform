@@ -1,7 +1,51 @@
+# Dependencies
 node_modules/
+
+# Build output
 dist/
-.env
-*.log
+
+# Test coverage output (generated locally, not needed in repo)
 coverage/
+
+# Playwright test outputs (videos, traces, screenshots from failures)
+test-results/
+playwright-report/
+
+# Allure results (raw data, report is generated separately)
 allure-results/
 allure-report/
+
+# Logs (if any)
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local environment files (if any)
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+*.temp
+
+# Lighthouse CI temporary folder (not used)
+.lighthouseci/
+lighthouserc.json

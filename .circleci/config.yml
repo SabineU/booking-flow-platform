@@ -1,17 +1,114 @@
 # .circleci/config.yml
 version: 2.1
-jobs:
-  lint-and-test:
+
+executors:
+  node-executor:
     docker:
       - image: cimg/node:20.18
+    working_directory: ~/repo
+
+jobs:
+  lint-and-format:
+    executor: node-executor
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}
       - run: npm ci
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-deps-{{ checksum "package-lock.json" }}
       - run: npm run lint
       - run: npm run format:check
       - run: npm run check:req
+
+  unit-tests:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      - run:
+          name: Run unit tests with coverage
+          command: npm run test:coverage
+      - store_test_results:
+          path: test-results/unit
+      - store_artifacts:
+          path: coverage
+          destination: coverage-report
+
+  api-tests:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      - run:
+          name: Run API contract tests
+          command: npm run test:api
+      - store_test_results:
+          path: test-results/api
+
+  e2e-tests:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-deps-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Playwright browsers
+          command: npx playwright install --with-deps
+      - run:
+          name: Run Playwright E2E tests
+          command: npm run test:e2e
+          when: always
+      - run:
+          name: Generate Allure report
+          command: npm run allure:generate
+          when: always
+      - store_test_results:
+          path: test-results/e2e
+      - store_artifacts:
+          path: allure-report
+          destination: allure-report
+      - store_artifacts:
+          path: playwright-report
+          destination: playwright-report
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+
 workflows:
-  #version: 2
+  # version: 2
   ci:
     jobs:
-      - lint-and-test
+      - lint-and-format
+      - unit-tests:
+          requires:
+            - lint-and-format
+      - api-tests:
+          requires:
+            - unit-tests
+      - e2e-tests:
+          requires:
+            - api-tests
