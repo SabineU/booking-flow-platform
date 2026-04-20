@@ -3,8 +3,8 @@ dist/
 coverage/
 allure-results/
 allure-report/
-test-results/           # Playwright output
-playwright-report/      # Playwright HTML report
-lighthouse-report/      # Generated Lighthouse report
-screenshots/            # Generated images (optional, but keeps them untouched)
-public/mockServiceWorker.js  # MSW auto‑generated file
+test-results/
+playwright-report/
+lighthouse-report/
+screenshots/
+public/mockServiceWorker.js
