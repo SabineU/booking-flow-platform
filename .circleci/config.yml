@@ -103,6 +103,27 @@ jobs:
           path: test-results
           destination: test-results
 
+  deploy:
+    executor: node-executor
+    steps:
+      - checkout
+      # Intentionally skipping npm ci and cache restore/save – Vercel builds remotely
+      - run:
+          name: Install Vercel CLI
+          command: npm install -g vercel
+      - run:
+          name: Deploy to Vercel (Preview for develop, Production for main)
+          command: |
+            if [ "$CIRCLE_BRANCH" = "main" ]; then
+              vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+              vercel build --prod --token=$VERCEL_TOKEN
+              vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+            else
+              vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+              vercel build --token=$VERCEL_TOKEN
+              vercel deploy --prebuilt --token=$VERCEL_TOKEN
+            fi
+
 workflows:
   # version: 2
   ci:
@@ -117,3 +138,11 @@ workflows:
       - e2e-tests:
           requires:
             - api-tests
+      - deploy:
+          requires:
+            - e2e-tests
+          filters:
+            branches:
+              only:
+                - main
+                - develop
