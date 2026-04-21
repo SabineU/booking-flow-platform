@@ -188,6 +188,6 @@ All checks must pass before merging to `main` or `develop`.
 - All quality gates (linting, formatting, unit tests, E2E tests) are enforced in CI.
 - UI/UX evidence is generated automatically via Playwright scripts.
 
-For any questions, please contact the repository owner via [E‑Mail](hozine3@gmail.com).
+For any questions, please contact the repository owner via E‑Mail: [hozine3@gmail.com].
 
 ---
