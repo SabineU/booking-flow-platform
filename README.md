@@ -5,7 +5,6 @@ A 4‑step skip (dumpster) booking flow with full QA automation. Built for a QA 
 ## 🚀 Live Demo
 
 - **Production (main branch):** [https://booking-flow-platform.vercel.app](https://booking-flow-platform.vercel.app)
-- **Staging (develop branch):** [https://booking-flow-platform-git-develop-sabineus-projects.vercel.app](https://booking-flow-platform-git-develop-sabineus-projects.vercel.app)
 
 > **Note for reviewers:** The app uses Mock Service Worker (MSW) to simulate API responses. All functionality works exactly as in the assessment brief.
 
@@ -163,8 +162,7 @@ docker run -p 3000:3000 booking-flow
 
 The app will be available at http://localhost:3000.
 
-**Note**:
-The Docker container uses port 3000 to avoid conflicts with the dev server (5173).
+> **Note**: The Docker container uses port 3000 to avoid conflicts with the dev server (5173).
 
 ---
 
@@ -190,6 +188,6 @@ All checks must pass before merging to `main` or `develop`.
 - All quality gates (linting, formatting, unit tests, E2E tests) are enforced in CI.
 - UI/UX evidence is generated automatically via Playwright scripts.
 
-For any questions, please contact the repository owner via E‑Mail.
+For any questions, please contact the repository owner via [E‑Mail](hozine3@gmail.com).
 
 ---
