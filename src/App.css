@@ -254,7 +254,16 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Responsive adjustments */
+/* ===== Main Header ===== */
+.booking-title {
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+  font-size: 2rem;
+}
+
+/* ===== Responsive Adjustments ===== */
 @media (max-width: 640px) {
   .skip-grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -267,17 +276,8 @@ button:disabled {
     display: flex;
     flex-direction: column;
   }
-}
-
-/* src/App.css - add visually-hidden class for h1 */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+  .booking-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
 }
