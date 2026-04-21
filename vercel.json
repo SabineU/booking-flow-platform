@@ -1,0 +1,7 @@
+{
+  "build": {
+    "env": {
+      "VITE_ENABLE_MSW": "true"
+    }
+  }
+}

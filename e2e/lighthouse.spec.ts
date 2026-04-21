@@ -9,7 +9,7 @@ import type { Flags } from 'lighthouse';
 test.describe('Lighthouse Audit', () => {
   test('Performance and accessibility scores meet thresholds', async ({ page }) => {
     // Skip in CI environments – the audit is heavy and can be flaky due to timing.
-    // The required Lighthouse report is generated locally and included in the repo.
+    // The required Lighthouse report is generated locally and included in the repo(Check lighthouse-report\report.html).
     test.skip(!!process.env.CI, 'Skipping Lighthouse in CI; report is generated locally.');
 
     // Wait for the app to be fully loaded
