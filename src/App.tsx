@@ -34,8 +34,9 @@ function App() {
     <div className="app">
       {/* Main landmark for accessibility */}
       <main>
-        {/* Level-one heading for accessibility */}
-        <h1 className="visually-hidden">Skip Hire Booking</h1>
+        {/* Visible main heading – serves both visual branding and accessibility */}
+        <h1 className="booking-title">Booking Flow Platform</h1>
+
         {step === 1 && <Step1Postcode onNext={handleStep1Complete} />}
         {step === 2 && (
           <Step2WasteType
