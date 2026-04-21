@@ -5,7 +5,8 @@ import './index.css';
 import App from './App.tsx';
 
 async function enableMocking() {
-  const shouldEnable = import.meta.env.DEV || import.meta.env.VITE_ENABLE_MSW === 'true';
+  //const shouldEnable = import.meta.env.DEV || import.meta.env.VITE_ENABLE_MSW === 'true';
+  const shouldEnable = import.meta.env.VITE_ENABLE_MSW === 'true';
   console.log('[MSW] Should enable?', shouldEnable, {
     DEV: import.meta.env.DEV,
     VITE_ENABLE_MSW: import.meta.env.VITE_ENABLE_MSW,
