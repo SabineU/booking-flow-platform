@@ -102,6 +102,7 @@ jobs:
       - store_artifacts:
           path: test-results
           destination: test-results
+
   deploy:
     executor: node-executor
     steps:
@@ -144,4 +145,4 @@ workflows:
             branches:
               only:
                 - main
-                - develop      
+                - develop
