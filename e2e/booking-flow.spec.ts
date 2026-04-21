@@ -97,10 +97,6 @@ test.describe('Booking Flow', () => {
     });
 
     await reviewStep.expectSuccess();
-    // No easy way to count requests with waitForRequest after the fact,
-    // but the lock prevents the second request. We can assert that no second request
-    // was sent by checking that the button click didn't trigger another waitForRequest.
-    // For simplicity, we trust the lock mechanism tested in unit tests.
   });
 
   // Skipped due to flakiness with MSW + Playwright route interception timing.

@@ -1,18 +1,20 @@
-// src/main.tsx
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
 
 async function enableMocking() {
-  const shouldEnable = import.meta.env.DEV || import.meta.env.VITE_ENABLE_MSW === 'true';
-  console.log('[MSW] Should enable?', shouldEnable, {
-    DEV: import.meta.env.DEV,
-    VITE_ENABLE_MSW: import.meta.env.VITE_ENABLE_MSW,
-  });
+  // Always enable MSW in production (Vercel).
+  // In local development, it's already enabled via import.meta.env.DEV.
+  const isProduction = !import.meta.env.DEV;
+
+  // You can optionally disable mocking by adding ?mock=false to the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const mockParam = urlParams.get('mock');
+  const shouldEnable = isProduction ? mockParam !== 'false' : true;
 
   if (!shouldEnable) {
-    console.log('[MSW] Mocking disabled.');
+    console.log('[MSW] Mocking disabled via URL parameter.');
     return;
   }
 
